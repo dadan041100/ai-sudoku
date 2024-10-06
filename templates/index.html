@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Sudoku Solver</h1>
+<div id="sudoku-grid"></div>
+<button id="solve-btn">Solve Sudoku</button>
+<button id="reset-btn">Reset</button>
+<script>
+    const puzzle = {{ puzzle|tojson }};
+    const sudokuGrid = $('#sudoku-grid');
+
+    // Initialize the Sudoku grid
+    function createGrid() {
+        puzzle.forEach(row => {
+            row.forEach(value => {
+                const cell = $('<input>', {
+                    type: 'number',
+                    min: '1',
+                    max: '9',
+                    class: 'cell',
+                    value: value !== 0 ? value : ''
+                });
+                sudokuGrid.append(cell);
+            });
+        });
+    }
+
+    // Solve the Sudoku using AJAX
+    $('#solve-btn').click(() => {
+        const board = [];
+        $('#sudoku-grid .cell').each(function(index) {
+            const row = Math.floor(index / 9);
+            const col = index % 9;
+            board[row] = board[row] || [];
+            board[row][col] = this.value ? parseInt(this.value) : 0;
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: '/solve',
+            contentType: 'application/json',
+            data: JSON.stringify({ board: board }),
+            success: function(response) {
+                if (response.solution) {
+                    response.solution.forEach((row, rowIndex) => {
+                        row.forEach((value, colIndex) => {
+                            const cell = $('#sudoku-grid .cell').eq(rowIndex * 9 + colIndex);
+                            cell.val(value);
+                        });
+                    });
+                } else {
+                    alert('No solution found!');
+                }
+            }
+        });
+    });
+
+    // Reset the Sudoku grid
+    $('#reset-btn').click(() => {
+        sudokuGrid.empty();
+        createGrid();
+    });
+
+    // Initialize the game
+    createGrid();
+</script>
+{% endblock %}
