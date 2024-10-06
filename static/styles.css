@@ -1,39 +1,150 @@
+/* General Layout */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    font-family: 'Poppins', sans-serif;  /* Fun and modern font */
+    background-color: #f2f2f2;
+    color: #333;
     margin: 0;
-    background-color: #f0f0f0;
+    padding: 20px;
+    text-align: center;
 }
 
 h1 {
-    margin-bottom: 20px;
+    font-size: 2.8em;
+    color: #4c57af;  /* Bright and engaging header */
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px #888;
 }
 
+label {
+    font-size: 1.2em;
+    margin-right: 10px;
+    color: #666;
+}
+
+select, button {
+    padding: 12px 24px;
+    font-size: 1.1em;
+    margin: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #43bdff;  /* Bright color for fun feel */
+    color: white;
+    cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+select:hover, button:hover {
+    background-color: #91d3ff;
+    transform: scale(1.05);  /* Adds interactive feel */
+}
+
+button:active {
+    background-color: #43bdff;
+}
+
+/* Sudoku Grid */
 #sudoku-grid {
     display: grid;
-    grid-template-columns: repeat(9, 40px);
-    grid-template-rows: repeat(9, 40px);
-    gap: 2px;
-    border: 3px solid #333;
+    grid-template-columns: repeat(9, 60px);  /* Make cells slightly larger for better interaction */
+    grid-gap: 3px;
+    margin: 20px auto;
+    max-width: 600px;
+    padding: 20px;
+    border: 2px solid #43bdff;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .cell {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     text-align: center;
-    font-size: 24px;
-    border: 1px solid #888;
+    font-size: 1.8em;
+    border: 1px solid #ddd;
+    outline: none;
+    border-radius: 10px;
+    background-color: #f9f9f9;  /* Light background for open cells */
+    color: #333;
+    transition: background-color 0.3s, box-shadow 0.2s;
+}
+
+.cell[readonly] {
+    background-color: #E1F5FE;  /* Differentiated color for pre-filled cells */
+    color: #0288D1;
+    font-weight: bold;
 }
 
 .cell:focus {
-    outline: none;
-    background-color: #e3f2fd;
+    background-color: #FFECB3;
+    box-shadow: 0 0 8px #FFC107;
 }
 
-button {
-    margin-top: 20px;
+/* Reset Button */
+#reset-btn {
+    background-color: #43bdff;
+    color: white;
+}
+
+#reset-btn:hover {
+    background-color: #91d3ff;
+}
+
+#reset-btn:active {
+    background-color: #43bdff;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    #sudoku-grid {
+        grid-template-columns: repeat(9, 40px);  /* Adjust grid size for smaller devices */
+    }
+
+    .cell {
+        width: 40px;
+        height: 40px;
+        font-size: 1.4em;
+    }
+
+    button, select {
+        padding: 8px 15px;
+        font-size: 1em;
+    }
+}
+
+/* Additional Fun Elements */
+button:focus {
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.6);  /* Fun glow effect on button focus */
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* Prevent the input spin buttons for Firefox */
+}
+
+footer {
+    margin-top: 40px;
+    padding: 15px;
+    background-color: #fff;  /* Dark background for the footer */
+    color: #0a0a0a;
+    text-align: center;
+    font-size: 0.9em;
+    border-top: 3px solid #fff;  /* Adds a pop of color to match the header */
+}
+
+footer a {
+    color: #43bdff;  /* Fun color for your name link */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    color: #91d3ff;  /* Lighter hover effect */
 }
